@@ -1,8 +1,7 @@
 import React from "react";
 import styles from "./Burger.module.css";
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
-import SimpleBar from "simplebar-react";
-import "simplebar/dist/simplebar.min.css";
+
 const burger = props => {
   let transformedIngradients = Object.keys(props.ingredients)
     .map(igKey => {
@@ -19,13 +18,11 @@ const burger = props => {
   console.log(styles.Burger);
   console.log(transformedIngradients);
   return (
-    <SimpleBar style={{ maxHeight: 600 }} autoHide="false">
-      <div className={styles.Burger}>
-        <BurgerIngredient type="bread-top" />
-        {transformedIngradients}
-        <BurgerIngredient type="bread-bottom" />
-      </div>
-    </SimpleBar>
+    <div className={styles.Burger}>
+      <BurgerIngredient type="bread-top" />
+      {transformedIngradients}
+      <BurgerIngredient type="bread-bottom" />
+    </div>
   );
 };
 export default burger;
