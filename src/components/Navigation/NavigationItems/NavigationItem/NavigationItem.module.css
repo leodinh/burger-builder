@@ -3,7 +3,7 @@
     box-sizing: border-box;
     display: block;
     width: 100%;
-    padding: 20px 10px;
+    padding: 30px 10px;
 }
 
 .NavigationItem a {
@@ -32,7 +32,7 @@
     .NavigationItem a {
         color: white;
         height: 100%;
-        padding: 16px 10px;
+        padding: 30px 10px;
         border-bottom: 4px solid transparent;
     }
 
