@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as actionType from "../../store/action";
+import * as actions from "../../store/actions/index";
 import Aux from "../../hoc/Aux/Aux";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
@@ -12,18 +12,10 @@ import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
 class BurgerBuilder extends Component {
   state = {
-    purchasing: false,
-    loading: false,
-    error: false
+    purchasing: false
   };
   componentDidMount() {
-    axios
-      .get("ingredient.json")
-      .then(res => {
-        console.log(res);
-        this.setState({ ingredients: res.data });
-      })
-      .catch(error => this.setState({ error: true }));
+    this.props.onInitIngredients();
   }
   updatePurchaseState(ingredients) {
     const sum = Object.keys(ingredients)
@@ -42,6 +34,7 @@ class BurgerBuilder extends Component {
     this.setState({ purchasing: false });
   };
   purchaseContinueHandler = () => {
+    this.props.onInitPurchase();
     this.setState({ loading: true });
 
     this.props.history.push({
@@ -57,10 +50,10 @@ class BurgerBuilder extends Component {
       console.log(disabledInfo[key]);
     }
     let orderSummary = null;
-    if (this.state.loading) {
-      orderSummary = <Spinner />;
-    }
-    let burger = this.state.error ? (
+    // if (this.state.loading) {
+    //   orderSummary = <Spinner />;
+    // }
+    let burger = this.props.error ? (
       <p>Ingredients can't be loaded</p>
     ) : (
       <Spinner />
@@ -104,22 +97,19 @@ class BurgerBuilder extends Component {
 }
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients,
-    totalPrice: state.totalPrice
+    ingredients: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totalPrice,
+    error: state.burgerBuilder.error
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     onIngredientAdded: ingredientName =>
-      dispatch({
-        type: actionType.ADD_INGREDIENT,
-        ingredientName: ingredientName
-      }),
+      dispatch(actions.addIngredient(ingredientName)),
     onIngredientRemoved: ingredientName =>
-      dispatch({
-        type: actionType.REMOVE_INGREDIENT,
-        ingredientName: ingredientName
-      })
+      dispatch(actions.removeIngredient(ingredientName)),
+    onInitIngredients: () => dispatch(actions.initIngredient()),
+    onInitPurchase: () => dispatch(actions.purchaseInit())
   };
 };
 export default connect(
