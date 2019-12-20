@@ -22,6 +22,7 @@ const authFail = (state, action) => {
   return updateObject(state, { error: action.error, loading: false });
 };
 const authLogout = (state, action) => {
+  console.log("hello");
   return updateObject(state, { token: null, userId: null });
 };
 const setAuthRedirectPath = (state, action) => {
