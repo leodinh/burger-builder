@@ -28,10 +28,10 @@ or
 yarn install
 ```
 
-##Compiles and live-reloads for development
+## Compiles and live-reloads for development
 
 ```
-npm install
+npm start
 or 
-yarn install
+yarn start
 ```
